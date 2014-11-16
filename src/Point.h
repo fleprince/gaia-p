@@ -13,12 +13,12 @@ namespace Gaia {
         public:
             Point();
             ~Point();
-            void setCartesian(float _x, float _y, float _z);
-            void setSpherical(float _p, float _a, float _r);
+            void setCartesian(double _x, double _y, double _z);
+            void setSpherical(double _p, double _a, double _r);
 
         private:
-            float x, y, z;
-            float p, a, r;
+            double x, y, z;
+            double p, a, r;
     };
 }
 
