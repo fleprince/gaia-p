@@ -1,0 +1,7 @@
+# C generated
+bin/
+gaia
+
+# gvim files
+*.swp
+*.swo
