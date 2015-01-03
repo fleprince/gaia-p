@@ -7,7 +7,8 @@ EXE=gaia
 SRCDIR=src
 BINDIR=bin
 CC=g++
-CFLAGS=-Wall -ansi -pedantic -g
+CFLAGS=-Wall -ansi -pedantic -g -std=gnu++0x
+LIBS=$(shell sdl-config --cflags --libs) -lGL -lGLU
 SRCPATH=$(wildcard $(SRCDIR)/*.cpp)
 SRCFILE=$(patsubst $(SRCDIR)/%,%,$(SRCPATH))
 OBJFILE=$(SRCFILE:.cpp=.o)
@@ -17,12 +18,12 @@ all: $(EXE)
 	@echo "Compilation achieved"
 
 $(EXE): $(OBJPATH)
-	@$(CC) -o $(EXE) $(OBJPATH)
-	@echo "Building "
+	@echo "Building $@"
+	$(CC) -o $(EXE) $(OBJPATH) $(LIBS)
 
 $(BINDIR)/%.o: $(SRCDIR)/%.cpp $(BINDIR)/
 	@echo "Build $< => $@"
-	@$(CC) -o $@ -c $< $(CFLAGS)
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 $(BINDIR)/:
 	@mkdir bin

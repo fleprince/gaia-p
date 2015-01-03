@@ -5,8 +5,14 @@
  * Distributed under terms of the GNU GPL V2 license.
  */
 
+#include <SDL/SDL.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <cstdlib>
+#include <iostream>
 #include <math.h>
 #include "Point.h"
+#include "Segment.h"
 
 namespace Gaia {
     Point::Point() {
@@ -16,6 +22,11 @@ namespace Gaia {
         p = 0;
         a = 0;
         r = 0;
+    }
+
+    Point::Point(Point* A, Point* B) {
+        this->setCartesian(A->x+B->x, A->y+B->y, A->z+B->z);
+        this->setSpherical(this->p, this->a, A->r);
     }
 
     Point::~Point() {
@@ -71,6 +82,26 @@ namespace Gaia {
         x = r * cos(p * M_PI / 180) * cos(a * M_PI / 180);
         y = r * cos(p * M_PI / 180) * sin(a * M_PI / 180);
         z = r * sin(p * M_PI / 180);
+    }
+
+    void Point::Draw() {
+        glVertex3d(x, y, z);
+    }
+
+    void Point::AddSegment(Segment* s) {
+        segments.push_back(s);
+    }
+
+    Segment* Point::FindLink(Point* p) {
+        Segment* res = nullptr;
+        if (p == nullptr) return res;
+        for (vector<Segment*>::iterator it=segments.begin(); it!=segments.end(); ++it) {
+            if ((*it)->Other(this) == p) {
+                res = *it;
+                break;
+            }
+        }
+        return res;
     }
 }
 

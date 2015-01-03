@@ -11,25 +11,36 @@
 #include <vector>
 #include <map>
 #include "Point.h"
+#include "Segment.h"
+#include "Triangle.h"
 //#include "Plaque.h"
-//#include "Triangle.h"
+
 using namespace std;
 
 namespace Gaia {
+
+    enum DRAW_STYLE {
+        DRAW_POINT,
+        DRAW_LINE,
+        DRAW_TRIANGLE
+    };
 
     class Planet {
         public:
             Planet();
             ~Planet();
             int GetNPoints();
+            void Draw(DRAW_STYLE style);
+            void Divide();
 
         private:
             int radius; // en mètres
             Point* center;
             vector<Point*> points;
+            vector<Segment*> segments;
+            vector<Triangle*> triangles;
 //            vector<Plaque> plaques;
 //            map<int, Triangle> villes;
-            void Divide();
     };
 } // ns Gaia
 
