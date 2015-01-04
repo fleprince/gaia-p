@@ -15,11 +15,14 @@
 using namespace std;
 
 namespace Gaia {
+    class Planet;
+
     class Triangle {
         public:
             Triangle(Point* A, Point* B, Point* C);
             ~Triangle();
             void Draw();
+            void Divide(Planet* planet);
 
         private:
             int pid;

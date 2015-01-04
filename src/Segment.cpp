@@ -19,6 +19,7 @@ namespace Gaia {
         t1 = nullptr;
         t2 = nullptr;
         M = nullptr;
+        newMiddle = true;
     }
 
     Segment::~Segment() {
@@ -42,6 +43,7 @@ namespace Gaia {
     Point* Segment::Middle() {
         if (M == nullptr) {
            M = new Point(A, B);
+           newMiddle = false;
         }
         return M;
     }
@@ -58,6 +60,10 @@ namespace Gaia {
         else if (t == t1) return t2;
         else if (t == t2) return t1;
         else return nullptr;
+    }
+
+    bool Segment::isNewMiddle() {
+        return newMiddle;
     }
 }
 

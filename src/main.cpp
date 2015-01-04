@@ -9,7 +9,6 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <cstdlib>
-#include <iostream>
 #include "GCam.h"
 #include "Planet.h"
 
@@ -47,7 +46,6 @@ int main(int argc, char *argv[])
     glEnable(GL_DEPTH_TEST);
 
     earth = new Planet();
-    cout << "earth contains " << earth->GetNPoints() << " points." << endl;
 
     Dessiner(earth);
 
@@ -64,6 +62,9 @@ int main(int argc, char *argv[])
                 {
                     case SDLK_ESCAPE:
                         exit(0);
+                        break;
+                    case SDLK_SPACE:
+                        earth->Divide();
                         break;
                     default:
                         break;

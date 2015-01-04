@@ -29,9 +29,11 @@ namespace Gaia {
         public:
             Planet();
             ~Planet();
-            int GetNPoints();
             void Draw(DRAW_STYLE style);
             void Divide();
+            void AddPoint(Point* p);
+            void AddSegment(Segment* s);
+            void AddTriangle(Triangle* t);
 
         private:
             int radius; // en mètres

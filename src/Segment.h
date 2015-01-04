@@ -22,11 +22,13 @@ namespace Gaia {
             Point* Middle();
             Point* Other(Point* p);
             Triangle* Other(Triangle* t);
+            bool isNewMiddle();
 
         private:
             Point *A,*B;
             Point *M;
             Triangle *t1, *t2;
+            bool newMiddle;
     };
 }
 

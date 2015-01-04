@@ -9,7 +9,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <cstdlib>
-#include <iostream>
+#include <iomanip>
 #include <math.h>
 #include "Point.h"
 #include "Segment.h"
@@ -32,6 +32,22 @@ namespace Gaia {
     Point::~Point() {
     }
 
+    ostream& operator<<(ostream& O, const Point& P) {
+        P.Display(O);
+        return O;
+    }
+
+    void Point::Display(ostream& O) const {
+        O << fixed << setprecision(2);
+        O << "(" << right << setw(5) << x;
+        O << ", " << right << setw(5) << y;
+        O << ", " << right << setw(5) << z;
+        O << " | " << right << setw(6) << p;
+        O << ", " << right << setw(7) << a;
+        O << ", " << right << setw(4) << r;
+        O << ")";
+    }
+
     void Point::setCartesian(double _x, double _y, double _z) {
         x = _x;
         y = _y;
@@ -52,21 +68,24 @@ namespace Gaia {
                 } else {
                     a = -90.0;
                 }
+            } else if (x < 0.0) {
+                a = atan(y/x) * 180 / M_PI + 180;
             } else {
-                a = atan(y/x);
+                a = atan(y/x) * 180 / M_PI;
             }
         }
     }
 
     void Point::setSpherical(double _p, double _a, double _r) {
         p = fmod(_p, 360.0);
+        double basea = 0;
         if (p >= 270) {
             p -= 360;
         } else if (p > 90) {
             p = 180 - p;
-            a += 180;
+            basea += 180;
         }
-        a = fmod(a+_a, 360.0);
+        a = fmod(basea+_a, 360.0);
         if (a >= 180) {
             a -= 360;
         }

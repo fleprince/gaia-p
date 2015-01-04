@@ -9,7 +9,6 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <cstdlib>
-#include <iostream>
 #include <math.h>
 #include "Planet.h"
 
@@ -19,7 +18,6 @@ namespace Gaia {
         double originlat = atan(0.5) * 180 / M_PI;
         radius = 2; //6371000;
         center = new Point();
-        cout << "Creating planet with " << radius/1000 << " km as radius." << endl;
 
         Point* top = new Point();
         Point* bottom = new Point();
@@ -78,10 +76,6 @@ namespace Gaia {
         }
     }
 
-    int Planet::GetNPoints() {
-        return points.size();
-    }
-
     void Planet::Draw(DRAW_STYLE style) {
 
         // Draw points
@@ -109,9 +103,25 @@ namespace Gaia {
     }
 
     void Planet::Divide() {
-        for (vector<Triangle*>::iterator it=triangles.begin(); it!=triangles.end(); ++it) {
-            Triangle* t = *it;
-
+        vector<Triangle*>::size_type ntriangles = triangles.size();
+        vector<Segment*>::size_type nsegments = segments.size();
+        for (vector<Triangle*>::size_type i=0 ; i<ntriangles; i++) {
+            triangles[i]->Divide(this);
         }
+
+        segments.erase(segments.begin(), segments.begin() + nsegments);
+        triangles.erase(triangles.begin(), triangles.begin() + ntriangles);
+    }
+
+    void Planet::AddPoint(Point* p) {
+        points.push_back(p);
+    }
+
+    void Planet::AddSegment(Segment* s) {
+        segments.push_back(s);
+    }
+
+    void Planet::AddTriangle(Triangle* t) {
+        triangles.push_back(t);
     }
 }
