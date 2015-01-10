@@ -19,6 +19,7 @@ namespace Gaia {
             ~Segment();
             void Draw();
             void AddTriangle(Triangle* t);
+            void RemoveTriangle(Triangle* t);
             Point* Middle();
             Point* Other(Point* p);
             Triangle* Other(Triangle* t);

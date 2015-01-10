@@ -73,9 +73,19 @@ namespace Gaia {
         planet->AddTriangle(new Triangle(p[2], mca, mbc));
         planet->AddTriangle(new Triangle(mab, mbc, mca));
 
-        if (s[0]->Other(this) == nullptr) delete s[0];
-        if (s[1]->Other(this) == nullptr) delete s[1];
-        if (s[2]->Other(this) == nullptr) delete s[2];
+        Triangle* tmpt;
+        tmpt = s[0]->Other(this);
+        s[0]->RemoveTriangle(this);
+        if (tmpt == nullptr) delete s[0];
+
+        tmpt = s[1]->Other(this);
+        s[1]->RemoveTriangle(this);
+        if (tmpt == nullptr) delete s[1];
+
+        tmpt = s[2]->Other(this);
+        s[2]->RemoveTriangle(this);
+        if (tmpt == nullptr) delete s[2];
+
         delete this;
     }
 }

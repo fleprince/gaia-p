@@ -79,12 +79,14 @@ namespace Gaia {
     void Planet::Draw(DRAW_STYLE style) {
 
         // Draw points
+        /*
         glBegin(GL_POINTS);
         glColor3ub(255,0,0);
         for (vector<Point*>::iterator it=points.begin(); it!=points.end(); ++it) {
             (*it)->Draw();
         }
         glEnd();
+        */
 
         // Draw lines
         glBegin(GL_LINES);
@@ -95,17 +97,19 @@ namespace Gaia {
         glEnd();
 
         // Draw triangles
+        /*
         glBegin(GL_TRIANGLES);
         for (vector<Triangle*>::iterator it=triangles.begin(); it!=triangles.end(); ++it) {
             (*it)->Draw();
         }
         glEnd();
+        */
     }
 
     void Planet::Divide() {
         vector<Triangle*>::size_type ntriangles = triangles.size();
         vector<Segment*>::size_type nsegments = segments.size();
-        for (vector<Triangle*>::size_type i=0 ; i<ntriangles; i++) {
+        for (vector<Triangle*>::size_type i=0 ; i<ntriangles ; i++) {
             triangles[i]->Divide(this);
         }
 

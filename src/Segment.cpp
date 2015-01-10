@@ -23,6 +23,8 @@ namespace Gaia {
     }
 
     Segment::~Segment() {
+        A->RemoveSegment(this);
+        B->RemoveSegment(this);
     }
 
     void Segment::Draw() {
@@ -36,6 +38,16 @@ namespace Gaia {
                 t1 = t;
             } else if (t2 == nullptr) {
                 t2 = t;
+            }
+        }
+    }
+
+    void Segment::RemoveTriangle(Triangle* t) {
+        if (t != nullptr) {
+            if (t1 == t) {
+                t1 = nullptr;
+            } else if (t2 == t) {
+                t2 = nullptr;
             }
         }
     }

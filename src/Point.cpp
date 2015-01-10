@@ -111,6 +111,16 @@ namespace Gaia {
         segments.push_back(s);
     }
 
+    void Point::RemoveSegment(Segment* s) {
+        vector<Segment*>::size_type nsegments = segments.size();
+        for (vector<Segment*>::size_type i=0 ; i<nsegments ; i++) {
+            if (segments[i] == s) {
+                segments.erase(segments.begin() + i);
+                break;
+            }
+        }
+    }
+
     Segment* Point::FindLink(Point* p) {
         Segment* res = nullptr;
         if (p == nullptr) return res;
