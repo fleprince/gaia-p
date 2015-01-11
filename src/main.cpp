@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
                         exit(0);
                         break;
                     case SDLK_SPACE:
-                        earth->Divide();
+                        earth->Divide(1);
                         break;
                     default:
                         break;

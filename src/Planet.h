@@ -30,7 +30,7 @@ namespace Gaia {
             Planet();
             ~Planet();
             void Draw(DRAW_STYLE style);
-            void Divide();
+            void Divide(int n);
             void AddPoint(Point* p);
             void AddSegment(Segment* s);
             void AddTriangle(Triangle* t);
@@ -43,6 +43,7 @@ namespace Gaia {
             vector<Triangle*> triangles;
 //            vector<Plaque> plaques;
 //            map<int, Triangle> villes;
+            void Divide();
     };
 } // ns Gaia
 

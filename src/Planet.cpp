@@ -58,6 +58,8 @@ namespace Gaia {
         triangles.push_back(new Triangle(bottom, b[0], b[4]));
         triangles.push_back(new Triangle(b[4], t[0], t[4]));
         triangles.push_back(new Triangle(b[4], t[0], b[0]));
+
+        this->Divide(3);
     }
 
     Planet::~Planet() {
@@ -114,6 +116,12 @@ namespace Gaia {
 
         segments.erase(segments.begin(), segments.begin() + nsegments);
         triangles.erase(triangles.begin(), triangles.begin() + ntriangles);
+    }
+
+    void Planet::Divide(int n) {
+        for (int i=0 ; i<n ; i++) {
+            this->Divide();
+        }
     }
 
     void Planet::AddPoint(Point* p) {
