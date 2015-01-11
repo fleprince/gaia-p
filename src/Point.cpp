@@ -113,12 +113,15 @@ namespace Gaia {
 
     void Point::RemoveSegment(Segment* s) {
         vector<Segment*>::size_type nsegments = segments.size();
+        bool found = false;
         for (vector<Segment*>::size_type i=0 ; i<nsegments ; i++) {
             if (segments[i] == s) {
+                found = true;
                 segments.erase(segments.begin() + i);
                 break;
             }
         }
+        if (!found) cout << "WARNING: segment not found" << endl;
     }
 
     Segment* Point::FindLink(Point* p) {

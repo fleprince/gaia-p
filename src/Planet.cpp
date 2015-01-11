@@ -77,7 +77,6 @@ namespace Gaia {
     }
 
     void Planet::Draw(DRAW_STYLE style) {
-
         // Draw points
         /*
         glBegin(GL_POINTS);

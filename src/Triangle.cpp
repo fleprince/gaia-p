@@ -48,24 +48,30 @@ namespace Gaia {
 
         ans = s[0]->isNewMiddle();
         Point* mab = s[0]->Middle();
-        if (ans) planet->AddPoint(mab);
+        if (ans) {
+            planet->AddPoint(mab);
+            planet->AddSegment(new Segment(p[0], mab));
+            planet->AddSegment(new Segment(p[1], mab));
+        }
 
         ans = s[1]->isNewMiddle();
         Point* mbc = s[1]->Middle();
-        if (ans) planet->AddPoint(mbc);
+        if (ans) {
+            planet->AddPoint(mbc);
+            planet->AddSegment(new Segment(p[1], mbc));
+            planet->AddSegment(new Segment(p[2], mbc));
+        }
 
         ans = s[2]->isNewMiddle();
         Point* mca = s[2]->Middle();
-        if (ans) planet->AddPoint(mca);
+        if (ans) {
+            planet->AddPoint(mca);
+            planet->AddSegment(new Segment(p[0], mca));
+            planet->AddSegment(new Segment(p[2], mca));
+        }
 
-        planet->AddSegment(new Segment(p[0], mab));
-        planet->AddSegment(new Segment(p[0], mca));
         planet->AddSegment(new Segment(mca, mab));
-        planet->AddSegment(new Segment(p[1], mab));
-        planet->AddSegment(new Segment(p[1], mbc));
         planet->AddSegment(new Segment(mbc, mab));
-        planet->AddSegment(new Segment(p[2], mbc));
-        planet->AddSegment(new Segment(p[2], mca));
         planet->AddSegment(new Segment(mbc, mca));
 
         planet->AddTriangle(new Triangle(p[0], mab, mca));
