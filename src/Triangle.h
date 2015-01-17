@@ -16,20 +16,22 @@ using namespace std;
 
 namespace Gaia {
     class Planet;
+    class Plaque;
 
     class Triangle {
         public:
             Triangle(Point* A, Point* B, Point* C);
             ~Triangle();
-            void Draw();
+            void Draw(Point* pcam);
             void Divide(Planet* planet);
+            Triangle* GetNeighbor(unsigned int num);
+            Plaque* plaque;
 
         private:
             int pid;
             string nom;
             Point* p[3];
             Segment* s[3];
-            int color[3]; //tmp TODO : remove
     };
 }
 

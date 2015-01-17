@@ -25,9 +25,13 @@ namespace Gaia {
             void setCartesian(double _x, double _y, double _z);
             void setSpherical(double _p, double _a, double _r);
             void Draw();
+            bool isViewableFrom(Point* pcam);
             void AddSegment(Segment* s);
             void RemoveSegment(Segment* s);
             Segment* FindLink(Point* p);
+            double getx();
+            double gety();
+            double getz();
 
         private:
             double x, y, z;

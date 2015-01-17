@@ -16,6 +16,8 @@ namespace Gaia {
         distance = 5;
         phi = 0;
         psi = 0;
+        gcamPos.setSpherical(phi, psi, distance);
+        gcamDir.setCartesian(0, 0, 0);
         motionSens = 0.3;
         scrollSens = 0.2;
     }
@@ -25,13 +27,14 @@ namespace Gaia {
 
     void GCam::OnMouseMotion(const SDL_MouseMotionEvent & event) {
         if (moving) {
-            phi += event.xrel * motionSens;
+            phi -= event.xrel * motionSens;
             psi += event.yrel * motionSens;
             if (psi > 90)
                 psi = 90;
             else if (psi < -90)
                 psi = -90;
             phi = fmod(phi, 360.0);
+            gcamPos.setSpherical(psi, phi, distance);
         }
     }
 
@@ -51,13 +54,14 @@ namespace Gaia {
                 && (event.type == SDL_MOUSEBUTTONDOWN)) {
             distance += scrollSens;
         }
+        gcamPos.setSpherical(psi, phi, distance);
     }
 
     void GCam::Look() {
-        gluLookAt(distance,0,0,
-              0,0,0,
+        gluLookAt(gcamPos.getx(), gcamPos.gety(), gcamPos.getz(),
+              gcamDir.getx(), gcamDir.gety(), gcamDir.getz(),
               0,0,1);
-        glRotated(psi,0,1,0);
-        glRotated(phi,0,0,1);
+        //glRotated(psi,0,1,0);
+        //glRotated(phi,0,0,1);
     }
 }

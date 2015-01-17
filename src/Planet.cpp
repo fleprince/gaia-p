@@ -5,12 +5,12 @@
  * Distributed under terms of the GNU GPL V2 license.
  */
 
+#include "Planet.h"
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <cstdlib>
 #include <math.h>
-#include "Planet.h"
 
 using namespace std;
 namespace Gaia {
@@ -59,7 +59,21 @@ namespace Gaia {
         triangles.push_back(new Triangle(b[4], t[0], t[4]));
         triangles.push_back(new Triangle(b[4], t[0], b[0]));
 
-        this->Divide(3);
+        this->Divide(5);
+
+        for (int i=0 ; i<12 ; i++) {
+            Triangle* tmpt = nullptr;
+            do {
+                tmpt = triangles[(rand() % triangles.size())];
+                if (tmpt->plaque != nullptr) {
+                    tmpt = nullptr;
+                }
+            } while (tmpt == nullptr);
+
+            plaques.push_back(new Plaque(tmpt));
+        }
+
+        while (this->Step()) {}
     }
 
     Planet::~Planet() {
@@ -76,35 +90,40 @@ namespace Gaia {
             delete points.back();
             points.pop_back();
         }
+        while (! plaques.empty()) {
+            delete plaques.back();
+            plaques.pop_back();
+        }
     }
 
-    void Planet::Draw(DRAW_STYLE style) {
-        // Draw points
-        /*
-        glBegin(GL_POINTS);
-        glColor3ub(255,0,0);
-        for (vector<Point*>::iterator it=points.begin(); it!=points.end(); ++it) {
-            (*it)->Draw();
+    void Planet::Draw(Point* pcam, DRAW_STYLE style) {
+        if (style & DRAW_POINT) {
+            // Draw points
+            glBegin(GL_POINTS);
+            glColor3ub(255,0,0);
+            for (vector<Point*>::iterator it=points.begin(); it!=points.end(); ++it) {
+                (*it)->Draw();
+            }
+            glEnd();
         }
-        glEnd();
-        */
 
-        // Draw lines
-        glBegin(GL_LINES);
-        glColor3ub(255,255,255);
-        for (vector<Segment*>::iterator it=segments.begin(); it!=segments.end(); ++it) {
-            (*it)->Draw();
+        if (style & DRAW_LINE) {
+            // Draw lines
+            glBegin(GL_LINES);
+            for (vector<Segment*>::iterator it=segments.begin(); it!=segments.end(); ++it) {
+                (*it)->Draw(pcam);
+            }
+            glEnd();
         }
-        glEnd();
 
-        // Draw triangles
-        /*
-        glBegin(GL_TRIANGLES);
-        for (vector<Triangle*>::iterator it=triangles.begin(); it!=triangles.end(); ++it) {
-            (*it)->Draw();
+        if (style & DRAW_TRIANGLE) {
+            // Draw triangles
+            glBegin(GL_TRIANGLES);
+            for (vector<Triangle*>::iterator it=triangles.begin(); it!=triangles.end(); ++it) {
+                (*it)->Draw(pcam);
+            }
+            glEnd();
         }
-        glEnd();
-        */
     }
 
     void Planet::Divide() {
@@ -134,5 +153,13 @@ namespace Gaia {
 
     void Planet::AddTriangle(Triangle* t) {
         triangles.push_back(t);
+    }
+
+    bool Planet::Step() {
+        bool carryon = false;
+        for (vector<Plaque*>::iterator it=plaques.begin(); it!=plaques.end(); ++it) {
+            carryon |= (*it)->Step();
+        }
+        return carryon;
     }
 }

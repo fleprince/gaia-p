@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include "Planet.h"
+#include "Plaque.h"
 
 namespace Gaia {
     Triangle::Triangle(Point* A, Point* B, Point* C) {
@@ -28,19 +29,26 @@ namespace Gaia {
         s[1]->AddTriangle(this);
         s[2]->AddTriangle(this);
 
-        color[0] = rand() % 256;
-        color[1] = rand() % 256;
-        color[2] = rand() % 256;
+        plaque = nullptr;
     }
 
     Triangle::~Triangle() {
     }
 
-    void Triangle::Draw() {
-        glColor3ub(color[0], color[1], color[2]);
-        p[0]->Draw();
-        p[1]->Draw();
-        p[2]->Draw();
+    void Triangle::Draw(Point* pcam) {
+        if (p[0]->isViewableFrom(pcam)
+         || p[1]->isViewableFrom(pcam)
+         || p[2]->isViewableFrom(pcam))
+        {
+            if (plaque == nullptr)
+                glColor3ub(255, 255, 255);
+            else
+                plaque->UseGLColor();
+
+            p[0]->Draw();
+            p[1]->Draw();
+            p[2]->Draw();
+        }
     }
 
     void Triangle::Divide(Planet* planet) {
@@ -93,6 +101,14 @@ namespace Gaia {
         if (tmpt == nullptr) delete s[2];
 
         delete this;
+    }
+
+    Triangle* Triangle::GetNeighbor(unsigned int num) {
+        if (num < 3) {
+            return s[num]->Other(this);
+        } else {
+            return nullptr;
+        }
     }
 }
 

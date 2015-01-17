@@ -9,6 +9,7 @@
 #define __GCAM_H__
 
 #include <SDL/SDL.h>
+#include "Point.h"
 
 namespace Gaia {
     class GCam {
@@ -24,12 +25,15 @@ namespace Gaia {
             //void SetMotionSens(double sensitivity);
             //void SetScrollSens(double sensitivity);
 
+            Point gcamPos;
+
         private:
             double motionSens;
             double scrollSens;
             bool moving;
             double distance;
             double phi, psi;
+            Point gcamDir;
     };
 }
 

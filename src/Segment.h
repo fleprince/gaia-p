@@ -17,7 +17,7 @@ namespace Gaia {
         public:
             Segment(Point* _A, Point* _B);
             ~Segment();
-            void Draw();
+            void Draw(Point* pcam);
             void AddTriangle(Triangle* t);
             void RemoveTriangle(Triangle* t);
             Point* Middle();

@@ -107,6 +107,10 @@ namespace Gaia {
         glVertex3d(x, y, z);
     }
 
+    bool Point::isViewableFrom(Point* pcam) {
+        return (pcam->x*x + pcam->y*y + pcam->z*z) >= 0;
+    }
+
     void Point::AddSegment(Segment* s) {
         segments.push_back(s);
     }
@@ -134,6 +138,18 @@ namespace Gaia {
             }
         }
         return res;
+    }
+
+    double Point::getx() {
+        return x;
+    }
+
+    double Point::gety() {
+        return y;
+    }
+
+    double Point::getz() {
+        return z;
     }
 }
 

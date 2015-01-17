@@ -5,12 +5,13 @@
  * Distributed under terms of the GNU GPL V2 license.
  */
 
+#include "Segment.h"
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <cstdlib>
-#include "Segment.h"
 #include "Triangle.h"
+#include "Plaque.h"
 
 namespace Gaia {
     Segment::Segment(Point* _A, Point* _B) : A(_A), B(_B) {
@@ -27,9 +28,16 @@ namespace Gaia {
         B->RemoveSegment(this);
     }
 
-    void Segment::Draw() {
-        A->Draw();
-        B->Draw();
+    void Segment::Draw(Point* pcam) {
+        if (A->isViewableFrom(pcam) || B->isViewableFrom(pcam)) {
+            if (t1->plaque == t2->plaque && t1->plaque != nullptr) {
+                t1->plaque->UseGLColor();
+            } else {
+                glColor3ub(255, 255, 255);
+            }
+            A->Draw();
+            B->Draw();
+        }
     }
 
     void Segment::AddTriangle(Triangle* t) {

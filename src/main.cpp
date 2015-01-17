@@ -64,7 +64,8 @@ int main(int argc, char *argv[])
                         exit(0);
                         break;
                     case SDLK_SPACE:
-                        earth->Divide(1);
+                        for (int i=0 ; i<10 ; i++)
+                            earth->Step();
                         break;
                     default:
                         break;
@@ -95,7 +96,7 @@ void Dessiner(Planet* planet)
     gcam->Look();
 
     /* Dessin 3D */
-    planet->Draw(DRAW_POINT);
+    planet->Draw(&(gcam->gcamPos), DRAW_TRIANGLE);
 
     glFlush();
     SDL_GL_SwapBuffers();
