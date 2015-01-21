@@ -35,7 +35,6 @@ int main(int argc, char *argv[])
     SDL_Event event;
 
     SDL_Init(SDL_INIT_VIDEO);
-    atexit(SDL_Quit);
     SDL_WM_SetCaption("GAIAp viewer", NULL);
     SDL_SetVideoMode(640, 480, 32, SDL_OPENGL);
 
