@@ -11,6 +11,7 @@
 #include <GL/glu.h>
 #include <cstdlib>
 #include <iostream>
+#include <math.h>
 
 namespace Gaia {
     static int NPlaques = 0;
@@ -38,6 +39,7 @@ namespace Gaia {
 
         canGrow = (onedge.size() != 0);
         edgelength = 3;
+        ntriangles = 1;
 
         color[0] = rand() % 256;
         color[1] = rand() % 256;
@@ -56,9 +58,12 @@ namespace Gaia {
             Triangle *elu = nullptr;
             int nelu;
 
+            // choose one free triangle
             do {
                 nelu = rand() % onedge.size();
                 elu = onedge[nelu];
+
+                // elu already in a plaque
                 if (elu->plaque != nullptr) {
                     elu = nullptr;
                     onedge.erase(onedge.begin() + nelu);
@@ -66,33 +71,41 @@ namespace Gaia {
                 }
             } while (elu == nullptr && canGrow);
 
+            // elu is chosen
             if (canGrow) {
                 onedge.erase(onedge.begin() + nelu);
                 canGrow = (onedge.size() != 0);
+                ntriangles++;
                 in.push_back(elu);
                 elu->plaque = this;
 
-                Triangle *tmpt = elu->GetNeighbor(0);
-                if (tmpt == nullptr)
-                    cout << "ERROR nullptr" << endl;
-                else if (tmpt->plaque == nullptr)
-                    onedge.push_back(tmpt);
-
-                tmpt = elu->GetNeighbor(1);
-                if (tmpt == nullptr)
-                    cout << "ERROR nullptr" << endl;
-                else if (tmpt->plaque == nullptr)
-                    onedge.push_back(tmpt);
-
-                tmpt = elu->GetNeighbor(2);
-                if (tmpt == nullptr)
-                    cout << "ERROR nullptr" << endl;
-                else if (tmpt->plaque == nullptr)
-                    onedge.push_back(tmpt);
+                Triangle *tmpt;
+                for (int i=0 ; i<3 ; i++) {
+                    tmpt = elu->GetNeighbor(i);
+                    if (tmpt == nullptr)
+                        cout << "ERROR nullptr" << endl;
+                    else if (tmpt->plaque == nullptr) {
+                        edgelength++;
+                        onedge.push_back(tmpt);
+                    } else if (tmpt->plaque == this)
+                        edgelength--;
+                    else // other plaque
+                        edgelength++;
+                }
             }
         }
 
         return canGrow;
+    }
+
+    int Plaque::GetId() {
+        return this->id;
+    }
+
+    float Plaque::GetRatio() {
+        int A = this->ntriangles;
+        int P = this->edgelength;
+        return (float)4*M_PI*A/(P*P);
     }
 }
 

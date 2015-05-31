@@ -8,11 +8,13 @@ Le tout sous OpenGL & SDL en C++.
 Statut
 ======
 
-Actuellement la sphère se découpe à partir d'un isocaèdre régulier (cf. http://fr.wikipedia.org/wiki/Icosa%C3%A8dre) -donc 20 faces- 5 fois. On obtient donc une sphère de 20x4^5 triangles soit 20480.
+Actuellement la sphère se découpe à partir d'un isocaèdre régulier (cf. http://fr.wikipedia.org/wiki/Icosa%C3%A8dre).
 
 Todo
 ====
 
+* Définir un dispositif de pointage avec ray tracing/isobarycentre des triangles
+* Annuler l'activité CPU sans mouvement de caméra
 * Améliorer la découpe en plaques tectoniques
 * Appliquer la structure usuelle dans le main pour OpenGL
 * Activer l'anti-aliasing

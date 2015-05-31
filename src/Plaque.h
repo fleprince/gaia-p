@@ -18,6 +18,8 @@ namespace Gaia {
             ~Plaque();
             void UseGLColor();
             bool Step();
+            int GetId();
+            float GetRatio();
 
         private:
             int id;
@@ -26,6 +28,7 @@ namespace Gaia {
             int color[3];
             bool canGrow;
             int edgelength;
+            int ntriangles;
     };
 }
 

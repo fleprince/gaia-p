@@ -77,6 +77,12 @@ namespace Gaia {
         }
 
         while (this->Step()) {}
+
+        // debug post creation
+        for (int i=0 ; i<NPLAQUES ; i++) {
+            cout << "plaque " << i << " [" << plaques[i]->GetRatio() << "]";
+            cout << endl;
+        }
     }
 
     Planet::~Planet() {
