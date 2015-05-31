@@ -95,7 +95,7 @@ void Dessiner(Planet* planet)
     gcam->Look();
 
     /* Dessin 3D */
-    planet->Draw(&(gcam->gcamPos), DRAW_TRIANGLE);
+    planet->Draw(&(gcam->gcamPos), DRAW_LINE);
 
     glFlush();
     SDL_GL_SwapBuffers();

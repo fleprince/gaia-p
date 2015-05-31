@@ -12,6 +12,9 @@
 #include <cstdlib>
 #include <math.h>
 
+#define NPLAQUES      20
+#define DIVISIONSTEPS 6
+
 using namespace std;
 namespace Gaia {
     Planet::Planet() {
@@ -59,9 +62,9 @@ namespace Gaia {
         triangles.push_back(new Triangle(b[4], t[0], t[4]));
         triangles.push_back(new Triangle(b[4], t[0], b[0]));
 
-        this->Divide(5);
+        this->Divide(DIVISIONSTEPS);
 
-        for (int i=0 ; i<12 ; i++) {
+        for (int i=0 ; i<NPLAQUES ; i++) {
             Triangle* tmpt = nullptr;
             do {
                 tmpt = triangles[(rand() % triangles.size())];
